@@ -1,0 +1,20 @@
+Question 1: Write a Web Application (Blogger website), where a user can post blogs
+Note: User can perform the following operations:
+Adding Blogs
+Editing Blogs
+List all blogs
+Date Filters on Blog
+Pagination (mandatory)
+There must be a login page and registration functionality included.
+A user has his own blog page, where he can add new blog posts. Every authenticated user can comment on posts made by other users. The home page is a paginated list of all posts. **Non-authenticated users can see all blog posts, but cannot add new posts or comment.
+** Bonus for adding this particular functionality. An added advantage for clean and modular code.
+
+Backend/Frontend Technologies to be preferred: 
+Java, Spring boot, Hibernate, Maven/Gradle, Docker, NodeJS, ReactJS, Postgres
+
+Checklist of Things you must do in your project before submissions:
+Unit Test Coverage should be at least 50%
+Proper Documentation of all the rest APIs with the data model
+Document Steps to compile, build and run the project
+Please include all SQL scripts in a separate folder, to build your DB
+Post it on Github
