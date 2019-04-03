@@ -4,9 +4,10 @@ class Addcomment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      comment: '',
-      comment_date: ''
+      blog_id: undefined,
+      name: undefined,
+      comment: undefined,
+      commentbutton: true
     }
   }
 
@@ -16,33 +17,37 @@ class Addcomment extends React.Component {
   }
 
   onSubmit = () => {
+    document.getElementById('commentbox').value = '';
     fetch('http://localhost:3000/addcomment', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        blog_id: this.state.blog_id,
-        name: this.state.name,
+        blog_id: this.props.blog_id,
+        name: this.props.name,
         comment: this.state.comment,
-        comment_date: new Date()
       })
     })
     .then(response => response.json())
     .then(comment => {
       if (comment.blog_id) {
         this.props.loadComment(comment)
-        this.props.onRouteChange('home');
       }
     })
   }
 
   render() {
-   return(
-
-        <div className='pa0 br0 shadow-2'>
-            <input className='f6 pa1 w-20' type='text' onChange={this.onInputChange}/>
-            <button className='di w-8 grow f6 link ph1 pv1 white bg-blue' onClick={this.onSubmit}>Comment</button>
+    if (this.props.id) {
+   return (
+        <div className='pa0 br2 shadow-2'>
+            <input id='commentbox' className='f6 pa1 w-90 br3' type='text' onChange={this.onInputChange}/>
+            <input type="submit" value="comment" className='di w-10 br3 grow f6 link ph1 pv1 white bg-blue' onClick={this.onSubmit} />
          </div>
      );
+     } else {
+    return (
+       <div> </div>
+    );
+   }
  }
 }
 

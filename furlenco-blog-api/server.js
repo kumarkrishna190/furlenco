@@ -48,6 +48,9 @@ app.post('/signin', (req, res) => {
 app.post('/register', (req, res)=> {
 
     const { name, email, password, phone_num } = req.body;
+    if (!name || !email || !password || !phone_num ){
+       return res.status(400).json('one or more fields are left empty');
+    } 
     const hash = bcrypt.hashSync(password);
     db.transaction(trx => {
         trx.insert({
@@ -114,37 +117,6 @@ app.get('/blog', (req, res) => {
 })
 
 
-app.get('/blog/:blog_id', (req, res) => {
-    const { blog_id } = req.params;
-    db.select('*').from('blog').where({blog_id})
-     .then(blog => {
-        if (blog.length) {
-            res.json(blog[0])
-        } else {
-            res.status(400).json('blog not found')
-        }
-    })
-    .catch(err => res.status(400).json('something went wrong'))
-})
- 
-
- app.put('/editblog', (req, res) => {
-    const { id, title, blog } = req.body;
-    db('blog').where('blog_id', '=', id)
-    .update({
-            'title': title,
-            'blog': blog,
-            'last_update': new Date()
-    })
-    .returning('*')
-    .then(blog => {
-        res.json(blog)
-    })
-    .catch(err => { res.status(400).json('unable to update');
-    console.log(err);
-    })
-})
-
  app.post('/addcomment', (req, res)=> {
     const { blog_id, name, comment } = req.body;
     db.transaction(trx => {
@@ -171,9 +143,8 @@ app.get('/blog/:blog_id', (req, res) => {
     })
  })
 
-app.get('/comment/:blog_id', (req, res) => {
-    const { blog_id } = req.params;
-    db.select('*').from('comment').where({blog_id})
+app.get('/comment', (req, res) => {
+    db.select('*').from('comment')
      .then(comment => {
         if (comment.length) {
             res.json(comment)
@@ -184,6 +155,37 @@ app.get('/comment/:blog_id', (req, res) => {
     .catch(err => res.status(400).json('something went wrong'))
 })
 
+
+ app.put('/editblog', (req, res) => {
+    const { id, title, blog } = req.body;
+    db('blog').where('blog_id', '=', id)
+    .update({
+            'title': title,
+            'blog': blog,
+            'last_update': new Date()
+    })
+    .returning('*')
+    .then(blog => {
+        res.json(blog)
+    })
+    .catch(err => { res.status(400).json('unable to update');
+    console.log(err);
+    })
+})
+
+app.get('/blog/:blog_id', (req, res) => {
+    const { blog_id } = req.params;
+    db.select('*').from('blog').where({blog_id})
+     .then(blog => {
+        if (blog.length) {
+            res.json(blog[0])
+        } else {
+            res.status(400).json('blog not found')
+        }
+    })
+    .catch(err => res.status(400).json('something went wrong'))
+})
+ 
 
 
 app.listen(3000, ()=> {

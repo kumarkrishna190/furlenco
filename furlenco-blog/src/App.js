@@ -4,9 +4,7 @@ import Logo from './components/Logo/Logo';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Navigation from './components/Navigation/Navigation';
-import Blogcard from './components/Blog/Blogcard/Blogcard';
-import Addblog from './components/Blog/Addblog';
-//import Addcomment from './components/Blog/Addcomment';
+import Blogcard from './components/Blogcard/Blogcard';
 import Scroll from './components/Scroll/Scroll';
 import './App.css';
 
@@ -23,55 +21,33 @@ const particlesOption = {
              }
           }
 
+const initialState = {
+	 route: 'signin',
+	 isSignedIn: false,
+	  id: undefined,
+	  name: undefined,
+	  email: undefined
+	}
+
 class App extends Component {
     constructor() {
         super();
-        this.state = {
-            input: '',
-            route: 'signin',
-            isSignedIn: false,
-            user: {
-            	id: '',
-                name: '',
-                email: '',
-                phone_num: '',
-                joined: ''
-            },
-        }
+        this.state = initialState;  
     }
 
     loadUser = (data) => {
-        this.setState({user: {
+        this.setState({
         		id: data.id,
-        	    name: data.name,
-                email: data.email
-        }})
+        	  name: data.name,
+            email: data.email,
+        });
     }
-
-    // loadBlog = (data) => {
-    //     this.setState({blog: {
-    //     		blog_id: data.blog_id,
-    //             title: data.title,
-    //             blog: data.blog,
-    //             creation_date: data.creation_date,
-    //             last_update: data.last_update
-    //     }})
-    // }
-
-    // loadComment = (data) => {
-    //     this.setState({comment: {
-    //             blog_id: data.blog_id,
-    //             name: data.name,
-    //             comment: data.comment,
-    //             comment_date: data.comment_date
-    //     }})
-    // }
 
 
 
    onRouteChange = (route) => {
         if (route === 'signout') {
-            this.setState({isSignedIn: false})
+            this.setState(initialState)
         } else if (route === 'home') {
             this.setState({isSignedIn: true})
         }
@@ -87,23 +63,23 @@ class App extends Component {
          <Particles className='particles' params={particlesOption} />
          <Logo />
          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+         <div className='tr ph2 pv1 f3 b white ttc 0-70'> welcome {this.state.name} ! </div>
        </div>
        { (route === 'home') ? 
-         <div>
-           <Scroll>
-            <Addblog />
-            <Blogcard />
-           </Scroll>
-        </div>
+           <div>
+             <Scroll>
+               <Blogcard id = {this.state.id} name={this.state.name} email={this.state.email} />
+             </Scroll>
+           </div>
         : (route === 'signin') ?
             <Scroll>
-             <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
-        	 <Blogcard />
-        	</Scroll>
-        :   <Scroll>
-        	  <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-           	  <Blogcard />
-            </Scroll>
+              <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+        	    <Blogcard />
+        	 </Scroll>
+        : <Scroll>
+        	    <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+           	   <Blogcard />
+          </Scroll>
         }
 
       </div>
@@ -112,9 +88,3 @@ class App extends Component {
 }
 
 export default App;
-
-// List all blogs
-// Adding Blogs
-// Editing Blogs
-// Date Filters on Blog
-// Pagination (mandatory)
