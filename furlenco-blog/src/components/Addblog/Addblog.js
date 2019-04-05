@@ -19,7 +19,7 @@ onBlogChange = (event) => this.setState({blog: event.target.value});
 toggleAddBlog = () => (this.state.postbutton === true) ? this.setState({postbutton: false}) : this.setState({postbutton: true});
 
 onSubmitBlog = () => {
-    this.toggleAddBlog();
+   this.toggleAddBlog()
     fetch('http://localhost:3000/addblog', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -32,7 +32,8 @@ onSubmitBlog = () => {
     .then(response => response.json())
     .then(blog => {
       if (blog[0].blog_id) {
-        this.props.loadBlog(blog[0])
+        this.props.loadBlog(blog)
+        this.props.onBlogRouteChange('read')
       }
     })
   }
@@ -69,8 +70,8 @@ onSubmitBlog = () => {
              </div>
 
               <div className="flex justify-center ma1">
-                <div onClick={this.onSubmitBlog} className="w-20 f5 link dim white pa2 ba b--white bg-blue br3 pointer"> Submit and Go back </div>
-                <div  onClick = {() => this.toggleAddBlog()} className=' w-20 f5 link dim white pa2 ba b--white bg-blue br3 pointer'> Go back to edit </div>
+                <div onClick={this.onSubmitBlog} className="w-20 f5 link dim white pa2 ba b--white bg-blue br3 pointer"> Confirm and Write new </div>
+                <div  onClick = {() => this.toggleAddBlog()} className=' w-20 f5 link dim white pa2 ba b--white bg-blue br3 pointer'> Rewrite </div>
               </div>
 
          </div>

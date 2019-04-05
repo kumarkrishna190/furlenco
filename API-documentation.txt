@@ -1,0 +1,137 @@
+List of APIs with call methods and example.
+
+
+*** POST localhost:3000/register 
+
+	URL: localhost:3000/register
+
+	Description: A post request to register a new user in login table.
+
+	HEADERS:
+	Content-Type :application/json
+
+	Body:
+	{
+		"email": "kumarkrishna190@gmail.com",
+		"password": "cookies",
+		"name": "Krishna Kumar",
+		"phone_num": "6362324593"
+	}
+
+
+
+*** POST localhost:3000/signin
+
+	URL: localhost:3000/signin
+
+	Description: A post request for loging in by checking user details from login table.
+
+	HEADERS:
+	Content-Type: application/json
+
+	BODY
+	{
+		"email": "kumarkrishna190@gmail.com",
+		"password": "cookies"
+	}
+
+*** POST localhost:3000/addblog
+	
+	URL: localhost:3000/addblog
+
+	A post request to add new blogs to blog table.
+
+	HEADERS:
+	Content-Type:application/json
+
+	BODY:
+	{
+		"email": "kumarkrishna190@gmail.com",
+	    "title": "furlenco",
+	     "blog": "Furlenco was founded by Ajith Karimpana, an engineering graduate from NIT Jalandhar and alumnus of Temple University. It was incorporated in 2012. Before starting his own venture, Karimpana was serving as Vice President of Goldman Sachs in the US. He also has worked for Infosys Technologies and Morgan Stanley. The company is owned and operated by Bangalore-based Kieraya Furnishing Solutions. Initially, the company started as Rent Ur Duniya but was later renamed to Furlenco. In December 2016, Furlenco partnered with Airbnb to offer personalized home interiors. It also partnered with Uber Pocket Aces CORT The Viral Fever NoBroker Dharma Productions for ‘Badrinath Ki Dulhania’ and Red Chillies Entertainment for ‘Dear Zindagi’"
+	}
+
+
+
+*** GET localhost:3000/blog
+
+	URL: localhost:3000/blog
+
+	Description: A get request to get a detailed list of all the blogs from blog table.
+
+	HEADERS:
+	Content-Type: application/json
+
+
+
+*** POST localhost:3000/addcomment
+	
+	URL: localhost:3000/addcomment
+
+	Description: A post request to add comments to a blog and responses with list of comments from comment table.
+
+	HEADERS:
+	Content-Type: application/json
+
+	BODY:
+	{
+		"blog_id": "55",
+	    "name": "Krishna Kumar",
+	    "comment": "A wonderful startup and a dream company to work"
+	}
+
+
+*** GET localhost:3000/comment/55
+	
+	URL: localhost:3000/comment/55
+
+	Description: A get request to get list of comments of a blog by using its id.
+
+	HEADERS:
+	Content-Type: application/json
+
+
+
+
+******** Some extra APIs which i have created but haven't used in this project and can be used to add more features ********
+
+*** GET localhost:3000/comment
+
+	URL: localhost:3000/comment
+
+	Description: A get request which responses with list of comments from comment table.
+
+	HEADERS:
+	Content-Type: application/json
+
+
+*** PUT localhost:3000/editblog
+
+	URL: localhost:3000/editblog
+
+	A put request to edit a blog from blog table.
+
+	HEADERS:
+	Content-Type: application/json
+
+	BODY:
+	{
+		"id": "22",
+		"title": "lorem ipsum",
+	    "blog": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+	}
+
+
+*** GET localhost:3000/blog/22
+
+	URL: localhost:3000/blog/22
+
+	A get request to access blog data of a particular blog by its id.
+
+	HEADERS:
+	Content-Type: application/json
+
+
+
+
+

@@ -36,12 +36,12 @@ app.post('/signin', (req, res) => {
         .then(user => {
             res.json(user)
         })
-        .catch(err => res.status(400).json('unable to get blogs'))
+        .catch(err => res.status(400).json('unable to get blogs' + err))
        } else {
-        res.status(400).json('wrong email id or password')
+        res.status(400).json('wrong email id or password' + err)
         }
     })
-    .catch(err => res.status(400).json('wrong email id or password'))
+    .catch(err => res.status(400).json('wrong email id or password' + err))
 })
 
 
@@ -72,7 +72,7 @@ app.post('/register', (req, res)=> {
         .catch(trx.rollback)
     })
     .catch(err => {;
-        res.status(400).json('email already exists');
+        res.status(400).json('email already exists' + err);
     })
  })
 
@@ -99,21 +99,21 @@ app.post('/addblog', (req, res)=> {
         .catch(trx.rollback)
     })
     .catch(err => {
-        res.status(400).json('unable to add blog');
+        res.status(400).json('unable to add blog' + err);
     })
  })
 
 
 app.get('/blog', (req, res) => {
-    db.select('*').from('blog')
+    db.select('*').from('blog').orderBy ('last_update','desc')
      .then(blog => {
         if (blog.length) {
             res.json(blog)
         } else {
-            res.status(400).json('blog not found')
+            res.status(400).json('blog not found' + err)
         }
     })
-    .catch(err => res.status(400).json('something went wrong'))
+    .catch(err => res.status(400).json('something went wrong' + err))
 })
 
 
@@ -139,7 +139,7 @@ app.get('/blog', (req, res) => {
         .catch(trx.rollback)
     })
     .catch(err => {
-        res.status(400).json('you are not allowed to comment');
+        res.status(400).json('you are not allowed to comment' + err);
     })
  })
 
@@ -149,10 +149,23 @@ app.get('/comment', (req, res) => {
         if (comment.length) {
             res.json(comment)
         } else {
-            res.status(400).json('comment not found')
+            res.status(400).json('comment not found' + err)
         }
     })
-    .catch(err => res.status(400).json('something went wrong'))
+    .catch(err => res.status(400).json('something went wrong' + err))
+})
+
+app.get('/comment/:blog_id', (req, res) => {
+    const {blog_id} = req.params;
+    db.select('*').from('comment').where({blog_id})
+     .then(comment => {
+        if (comment.length) {
+            res.json(comment)
+        } else {
+            res.status(400).json('comment not found' + err)
+        }
+    })
+    .catch(err => res.status(400).json('something went wrong' + err))
 })
 
 
@@ -168,8 +181,7 @@ app.get('/comment', (req, res) => {
     .then(blog => {
         res.json(blog)
     })
-    .catch(err => { res.status(400).json('unable to update');
-    console.log(err);
+    .catch(err => { res.status(400).json('unable to update' + err);
     })
 })
 
@@ -180,10 +192,10 @@ app.get('/blog/:blog_id', (req, res) => {
         if (blog.length) {
             res.json(blog[0])
         } else {
-            res.status(400).json('blog not found')
+            res.status(400).json('blog not found' + err)
         }
     })
-    .catch(err => res.status(400).json('something went wrong'))
+    .catch(err => res.status(400).json('something went wrong' + err))
 })
  
 
@@ -192,4 +204,3 @@ app.listen(3000, ()=> {
 
     console.log('app is running on port 3000');
 })
-

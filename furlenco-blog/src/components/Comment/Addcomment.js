@@ -11,13 +11,12 @@ class Addcomment extends React.Component {
     }
   }
 
-
   onInputChange = (event) => {
     this.setState({comment: event.target.value})
   }
 
   onSubmit = () => {
-    document.getElementById('commentbox').value = '';
+    this.toggleComment();
     fetch('http://localhost:3000/addcomment', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -35,10 +34,14 @@ class Addcomment extends React.Component {
     })
   }
 
+  toggleComment = () => (this.state.commentbutton === true) ? this.setState({commentbutton: false}) : this.setState({commentbutton: true});
+
   render() {
     if (this.props.id) {
    return (
-        <div className='pa0 br2 shadow-2'>
+      (this.state.commentbutton) ?
+         <input type="submit" value="comment" className='w-10 br3 grow f6 link ph1 pv1 white bg-blue' onClick={this.toggleComment} />
+       : <div className='pa0 br2 shadow-2'>
             <input id='commentbox' className='f6 pa1 w-90 br3' type='text' onChange={this.onInputChange}/>
             <input type="submit" value="comment" className='di w-10 br3 grow f6 link ph1 pv1 white bg-blue' onClick={this.onSubmit} />
          </div>

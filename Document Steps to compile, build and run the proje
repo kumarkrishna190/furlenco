@@ -1,0 +1,24 @@
+Document Steps to compile, build and run the project
+
+** First you need to Download and install Node.js from 'https://nodejs.org/en/' if you don't have it on your system.
+
+** Install and create database as explained in 'Build and create database.txt' file.
+
+** Clone or download the project on your computer from 'https://github.com/kumarkrishna190/furlenco'
+
+** Open your terminal ds into furlenco-blog-api and hit npm start, this will start the server.
+
+** Open another terminal ds into furlenco-blog folder and hit npm start and that's it you will get your app running in browser.
+
+
+
+
+** Steps to build for deployment
+
+just hit npm run build in the project folder
+
+This will builds the app for production to the build folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+
+Your app is ready to be deployed!

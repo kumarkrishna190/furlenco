@@ -7,14 +7,15 @@ import Addblog from '../Addblog/Addblog';
 
 
 const initialState = {
-          blogRoute: 'read',
+          blogroute: 'read',
             blog: [],
             searchfield: '',
             datefield: '',
             searchtype: '',
             startid: 0 ,
             endid: 10,
-            errormessage: undefined
+            errormessage: undefined,
+            loadBlog: []
         }
 
 class Blogcard extends Component {
@@ -23,14 +24,18 @@ class Blogcard extends Component {
         this.state = initialState
     }
     
-    componentDidMount() {
+    componentWillMount() {
         fetch('http://localhost:3000/blog')
         .then(response=> response.json())
-        .then(blogs => this.setState({blog : blogs}))
-        .then(blog => {
-            if (!blog[0].id) {
-            this.setState({errormessage: 'Blogs not found..'})
-        }})
+        .then(blogs => {
+          if (blogs[0].blog_id) {
+          this.setState({blog : blogs})
+        } else if (this.state.loadBlog[0].blog_id) {
+          this.setState({blog : this.state.loadBlog})
+        } else {
+          this.setState({errormessage: 'Nothing to show, be the first one to write a blog..'})
+        }
+      })
     }
 
 
@@ -55,17 +60,17 @@ class Blogcard extends Component {
        }
     }
 
-    onBlogRouteChange = (blogRoute) => {
-      if (this.state.blogRoute === 'read') {
-       this.setState({blogRoute: 'write'})
+    onBlogRouteChange = (blogroute) => {
+      if (this.state.blogroute === 'read') {
+       this.setState({blogroute: 'write'})
        } else {
-       this.setState({blogRoute: 'read'});
+       this.setState({blogroute: 'read'});
      }
     }
 
   render() {
         const { id, name, email } = this.props;
-        const { blogRoute, searchtype, blog, errormessage } = this.state;
+        const { blogroute, searchtype, blog, errormessage } = this.state;
         const filterblog = this.state.blog.filter(blog =>{
           return blog.title.toLowerCase().includes(this.state.searchfield.toLowerCase());
         })
@@ -73,25 +78,25 @@ class Blogcard extends Component {
           return blog.last_update.substr(0, 10).toLowerCase().includes(this.state.datefield.toLowerCase());
         })
         const pagination = this.state.blog.filter(blog =>( blog.blog_id > this.state.startid && blog.blog_id < this.state.endid));
-        
+        console.log(blogroute);
 
     return (         
           <div>
            <div className='flex justify-between ma0 br2 shadow-5'> 
               <Searchbox searchChange={this.onSearchchange} />           
-              <Navigateblog onBlogRouteChange={this.onBlogRouteChange} blogRoute={blogRoute} id={id} />
+              <Navigateblog onBlogRouteChange={this.onBlogRouteChange} blogroute={blogroute} id={id} />
               <Datebox dateChange={this.onDatechange} />
            </div>
-           { (blogRoute === 'read') ?
+           { (blogroute === 'read') ?
              <div>
-                <div> {errormessage} </div>
+                <div className="f2 white"> {errormessage} </div>
                 <Bloglist blog={ filterblog } date={ datefilter } allblogs={ blog } pagination={ pagination } searchtype={ searchtype } id={id} name={name} />
                 <div className='w-40 flex justify-between center br2 shadow-5'>
                  <input className="white ph4 pv0 input-reset ba b--white bg-black grow pointer br3 f1 dib" type="button" value="←" onClick={()=>this.onPrevious()} />
                  <input className="white ph4 pv0 input-reset ba b--white bg-black grow pointer br3 f1 dib" type="button" value="→" onClick={()=>this.onNext()} />
                 </div>
              </div>
-           : <Addblog email={email}/>
+           : <Addblog email={email} onBlogRouteChange={this.onBlogRouteChange} loadBlog={this.state.loadBlog} />
          }
        </div>
      );

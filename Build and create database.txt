@@ -1,0 +1,42 @@
+STEPS TO CREATE DATABASE WITH POSTGRESQL:
+
+First you need to open your terminal and run following commands:
+
+--To install PostgreSQL - brew install postgresql
+--To start PostgreSQL - brew services start postgresql
+--To create database - createdb 'furlenco-blog'
+--To connect with database- psql 'furlenco-blog'
+
+
+(**Recommend to install GUI pSquel**)
+
+
+**Query to create login table**
+
+		CREATE TABLE login (
+		    name VARCHAR,
+		    hash VARCHAR (100) NOT NULL,
+		    email text PRIMARY KEY UNIQUE NOT NULL,
+		    phone_num VARCHAR
+		);
+
+
+**Query to create blog table**
+
+		CREATE TABLE blog (
+		    blog_id serial PRIMARY KEY,
+		    email text NOT NULL,
+		    title text,
+		    blog text,
+		    creation_date TIMESTAMP,
+		    last_update TIMESTAMP
+		);
+
+**Query to create comment table**
+
+		CREATE TABLE comment (
+		    blog_id INT,
+		    name text NOT NULL,
+		    comment text,
+		    comment_date TIMESTAMP
+		);

@@ -45,7 +45,7 @@ class Register extends React.Component {
         this.props.loadUser(user)
         this.props.onRouteChange('home');
       } else {
-        this.setState({errormessage: '*Email id already registered'})
+        this.setState({errormessage: '*Email id already registered or one or more field is left blank'})
       }
     })
   }
@@ -56,7 +56,7 @@ class Register extends React.Component {
           <main className="pa4 black-80">
             <div className="measure">
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                <legend className="f1 fw6 ph0 mh0">Register</legend>
+                <legend className="f1 center fw6 ph0 mh0">Register</legend>
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
                   <input onChange={this.onNameChange} className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="name"  id="name" />
@@ -73,9 +73,9 @@ class Register extends React.Component {
                   <label className="db fw6 lh-copy f6" htmlFor="contact=number">Contact</label>
                   <input onChange={this.onContactChange} className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="number" name="contact"  id="contact" />
                 </div>
-                <div className="f7  dark-red"> {this.state.errormessage}</div>
+                <div className="f7 dark-red"> {this.state.errormessage}</div>
               </fieldset>
-              <div className="">
+              <div>
                 <input onClick={ this.onSubmitSignIn } className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Register" />
               </div>
             
