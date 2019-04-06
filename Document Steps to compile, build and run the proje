@@ -6,9 +6,9 @@ Document Steps to compile, build and run the project
 
 ** Clone or download the project on your computer from 'https://github.com/kumarkrishna190/furlenco'
 
-** Open your terminal ds into furlenco-blog-api and hit npm start, this will start the server.
+** Open your terminal ds into furlenco-blog-api and hit npm install to build follwed by npm start, this will start the server.
 
-** Open another terminal ds into furlenco-blog folder and hit npm start and that's it you will get your app running in browser.
+** Open another terminal ds into furlenco-blog folder and hit npm install to build followed by npm start and that's it you will get your app running in browser.
 
 
 
